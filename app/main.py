@@ -4,6 +4,11 @@ from app.api.routes import router as api_router
 import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
 from fastapi_limiter.depends import RateLimiter
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI(
     title="License Plate Detection API",
@@ -23,7 +28,13 @@ app.add_middleware(
 # Initialize rate limiter
 @app.on_event("startup")
 async def startup():
-    redis_client = redis.from_url("redis://localhost", encoding="utf-8", decode_responses=True)
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+    redis_client = redis.from_url(
+        redis_url,
+        encoding="utf-8",
+        decode_responses=True,
+        password=os.getenv("REDIS_PASSWORD", None)
+    )
     await FastAPILimiter.init(redis_client)
 
 # Include API routes
