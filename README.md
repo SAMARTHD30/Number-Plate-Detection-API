@@ -6,7 +6,7 @@ A FastAPI-based API for license plate detection with rate limiting and image pro
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone (https://github.com/SAMARTHD30/Number-Plate-Detection-API.git)
 cd license-plate-api
 ```
 
