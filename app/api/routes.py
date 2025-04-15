@@ -4,9 +4,13 @@ import cv2
 import numpy as np
 import io
 import uuid
-from typing import Dict, List
+from typing import Dict, List, Optional
+from pydantic import BaseModel
 
 router = APIRouter(prefix="/api/v1")
+
+class ProcessImageRequest(BaseModel):
+    custom_text: Optional[str] = None
 
 @router.get("/ping", response_model=Dict[str, str])
 async def ping():
@@ -38,10 +42,13 @@ async def detect_plate(image: UploadFile = File(...)):
 @router.post("/process")
 async def process_image(
     car_image: UploadFile = File(...),
-    custom_text: str = Form(None)
+    custom_text: Optional[str] = Form(None)
 ):
     """Process car image with optional custom text"""
     try:
+        if not car_image:
+            raise HTTPException(status_code=400, detail="Car image is required")
+
         contents = await car_image.read()
         image_array = np.frombuffer(contents, np.uint8)
         image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
@@ -52,7 +59,11 @@ async def process_image(
         # Generate a unique ID for the processed image
         image_id = str(uuid.uuid4())
 
-        return {"image_id": image_id, "status": "success"}
+        return {
+            "image_id": image_id,
+            "status": "success",
+            "custom_text": custom_text if custom_text else None
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
