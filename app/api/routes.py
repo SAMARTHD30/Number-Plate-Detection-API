@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, HTTPException, Depends
 from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field
 import cv2
@@ -12,9 +12,15 @@ from datetime import datetime
 import torch
 import torchvision.transforms as transforms
 from PIL import Image
+import traceback
+from app.core.model import model  # Import the cached model
+from app.core.config import settings
 
 # Configure logging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Configure maximum upload size (100MB)
@@ -30,13 +36,13 @@ class ImageResponse(BaseModel):
     image_data: Dict[str, str]
 
 class DetectionResponse(BaseModel):
-    status: str
-    plate_text: Optional[str] = None
-    confidence: Optional[float] = None
-    bbox: Optional[List[int]] = None
-    image_data: Optional[Dict[str, str]] = None
+    detection_found: bool
+    plate_text: str
+    confidence: float
+    bounding_box: Optional[dict] = None
 
-router = APIRouter(prefix="/api/v1")
+# Fix the router prefix to avoid double /api
+router = APIRouter()
 
 class ProcessImageRequest(BaseModel):
     custom_text: Optional[str] = None
@@ -74,14 +80,72 @@ async def validate_file_size(file: UploadFile) -> None:
             raise HTTPException(status_code=500, detail="Error validating file size")
         raise e
 
-# Load your model (add your model path)
-try:
-    model = torch.hub.load('ultralytics/yolov5', 'custom', path='app/models/best.pt', force_reload=True)
-    model.eval()
-    logger.info("Model loaded successfully")
-except Exception as e:
-    logger.error(f"Error loading model: {e}")
-    model = None
+async def process_image(image: UploadFile, custom_text: Optional[str] = None) -> DetectionResponse:
+    try:
+        # Read image efficiently
+        contents = await image.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        if img is None:
+            raise ValueError("Failed to decode image")
+
+        # Convert BGR to RGB
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        # Run inference with optimized settings
+        results = model.predict(
+            img_rgb,
+            conf=float(settings.CONFIDENCE_THRESHOLD),
+            iou=0.45,
+            max_det=int(settings.MAX_DETECTIONS)
+        )
+
+        if len(results) == 0:
+            return DetectionResponse(
+                detection_found=False,
+                plate_text="",
+                confidence=0.0,
+                bounding_box=None
+            )
+
+        # Get the first result
+        result = results[0]
+        boxes = result.boxes
+
+        if len(boxes) == 0:
+            return DetectionResponse(
+                detection_found=False,
+                plate_text="",
+                confidence=0.0,
+                bounding_box=None
+            )
+
+        # Get the detection with highest confidence
+        box = boxes[0]
+        confidence = float(box.conf)
+        plate_text = result.names[int(box.cls)]
+
+        # Convert bounding box to required format
+        x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
+        bounding_box = {
+            "x1": x1,
+            "y1": y1,
+            "x2": x2,
+            "y2": y2
+        }
+
+        return DetectionResponse(
+            detection_found=True,
+            plate_text=plate_text,
+            confidence=confidence,
+            bounding_box=bounding_box
+        )
+
+    except Exception as e:
+        logger.error(f"Error processing image: {e}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 @router.get("/ping", response_model=Dict[str, str])
 async def ping():
@@ -94,102 +158,60 @@ async def ping():
 
 @router.post("/detect", response_model=DetectionResponse)
 async def detect_plate(
-    image: UploadFile = File(...),
-    return_processed: Optional[bool] = Form(False)
+    file: UploadFile = File(...),
+    return_type: str = "json",
+    custom_text: Optional[str] = None
 ):
-    """Detect license plate in image"""
     try:
-        # Validate file size
-        await validate_file_size(image)
+        # Process the image
+        detection = await process_image(file, custom_text)
 
-        if model is None:
-            logger.error("Model not loaded")
-            raise HTTPException(status_code=500, detail="Model not loaded")
+        if return_type == "json":
+            return detection
 
-        logger.info(f"Processing image: {image.filename}")
+        # For image return type, draw bounding box and return image
+        contents = await file.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-        # Read image
-        contents = await image.read()
-        image_array = np.frombuffer(contents, np.uint8)
-        image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        if detection.detection_found:
+            # Draw bounding box
+            bbox = detection.bounding_box
+            cv2.rectangle(
+                img,
+                (bbox["x1"], bbox["y1"]),
+                (bbox["x2"], bbox["y2"]),
+                (0, 255, 0),
+                2
+            )
 
-        if image is None:
-            logger.error("Invalid image file or format")
-            raise HTTPException(status_code=400, detail="Invalid image file")
+            # Add text
+            text = f"{detection.plate_text} ({detection.confidence:.2f})"
+            if custom_text:
+                text = f"{text} - {custom_text}"
 
-        # Log image shape and type
-        logger.debug(f"Image shape: {image.shape}, dtype: {image.dtype}")
+            cv2.putText(
+                img,
+                text,
+                (bbox["x1"], bbox["y1"] - 10),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                0.5,
+                (0, 255, 0),
+                2
+            )
 
-        # Convert to RGB for model
-        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # Convert image to bytes
+        _, img_encoded = cv2.imencode('.jpg', img)
+        img_bytes = img_encoded.tobytes()
 
-        try:
-            # Perform detection
-            logger.info("Running model inference")
-            results = model(image_rgb)
-            logger.info(f"Detection complete. Found {len(results.xyxy[0])} objects")
-
-            # Process results
-            if len(results.xyxy[0]) > 0:
-                # Get the first detection (highest confidence)
-                detection = results.xyxy[0][0]
-                bbox = [int(x) for x in detection[:4]]  # x1, y1, x2, y2
-                confidence = float(detection[4])
-
-                logger.info(f"Detection confidence: {confidence}")
-
-                # Convert bbox format from x1,y1,x2,y2 to x,y,w,h
-                x1, y1, x2, y2 = bbox
-                bbox = [x1, y1, x2-x1, y2-y1]
-
-                # Extract plate text (if available in your model's output)
-                plate_text = results.names[int(detection[5])] if hasattr(results, 'names') else "DETECTED"
-                logger.info(f"Detected plate text: {plate_text}")
-
-                # Draw bounding box if return_processed is True
-                if return_processed:
-                    x, y, w, h = bbox
-                    cv2.rectangle(image, (int(x), int(y)), (int(x + w), int(y + h)), (0, 255, 0), 2)
-                    cv2.putText(image, f"{plate_text} {confidence:.2f}",
-                               (int(x), int(y - 10)),
-                               cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-
-                    # Encode the processed image
-                    _, buffer = cv2.imencode(".jpg", image)
-                    base64_image = base64.b64encode(buffer).decode('utf-8')
-
-                    return DetectionResponse(
-                        status="success",
-                        plate_text=plate_text,
-                        confidence=confidence,
-                        bbox=bbox,
-                        image_data={
-                            "content_type": "image/jpeg",
-                            "base64_data": f"data:image/jpeg;base64,{base64_image}"
-                        }
-                    )
-
-                return DetectionResponse(
-                    status="success",
-                    plate_text=plate_text,
-                    confidence=confidence,
-                    bbox=bbox
-                )
-            else:
-                logger.info("No detection found in image")
-                return DetectionResponse(
-                    status="no_detection",
-                    plate_text=None,
-                    confidence=None,
-                    bbox=None
-                )
-
-        except Exception as e:
-            logger.error(f"Error during model inference: {e}")
-            raise HTTPException(status_code=500, detail=f"Model inference error: {str(e)}")
+        return StreamingResponse(
+            io.BytesIO(img_bytes),
+            media_type="image/jpeg"
+        )
 
     except Exception as e:
-        logger.error(f"Error processing request: {e}")
+        logger.error(f"Error in detect endpoint: {e}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/process-image", response_model=Optional[ImageResponse])

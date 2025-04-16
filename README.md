@@ -2,10 +2,9 @@
 
 A FastAPI-based API for detecting and processing license plates in images.
 
-<<<<<<< Updated upstream
 ## Features
 
-- License plate detection using YOLOv5
+- License plate detection using YOLOv5 (CPU-only)
 - Image processing with custom text overlay
 - File size validation (max 100MB)
 - Rate limiting (10 requests per minute)
@@ -13,14 +12,6 @@ A FastAPI-based API for detecting and processing license plates in images.
 - Error handling and logging
 - JSON and direct image responses
 
-## Prerequisites
-
-- Python 3.8+
-- Redis server (for rate limiting)
-- CUDA-compatible GPU (recommended for faster inference)
-
-## Installation
-=======
 ## Table of Contents
 1. [Prerequisites](#prerequisites)
 2. [Installation Steps](#installation-steps)
@@ -30,14 +21,12 @@ A FastAPI-based API for detecting and processing license plates in images.
 6. [Troubleshooting](#troubleshooting)
 7. [Development](#development)
 8. [Deployment](#deployment)
->>>>>>> Stashed changes
 
 ## Prerequisites
 
 Before you begin, ensure you have:
 - Python 3.8+ installed
 - Redis server installed and running
-- CUDA-compatible GPU (recommended for faster inference)
 - Git installed
 
 ## Installation Steps
@@ -48,24 +37,16 @@ git clone https://github.com/SAMARTHD30/Number-Plate-Detection-API.git
 cd Number-Plate-Detection-API
 ```
 
-<<<<<<< Updated upstream
-2. Create a virtual environment:
-=======
 ### Step 2: Create Virtual Environment
->>>>>>> Stashed changes
 ```bash
 # Create virtual environment
 python -m venv venv
-<<<<<<< Updated upstream
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-=======
 
 # Activate virtual environment
 # On Windows:
 .\venv\Scripts\activate
 # On Linux/Mac:
 source venv/bin/activate
->>>>>>> Stashed changes
 ```
 
 ### Step 3: Install Dependencies
@@ -73,311 +54,269 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-<<<<<<< Updated upstream
-4. Set up environment variables:
-Create a `.env` file in the root directory:
-=======
 ### Step 4: Set Up Environment Variables
 Create a `.env` file in the root directory with:
->>>>>>> Stashed changes
 ```env
+# Server Configuration
+HOST=0.0.0.0
+PORT=8000
+DEBUG=True
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_DB=0
+REDIS_PASSWORD=
 REDIS_URL=redis://localhost:6379/0
-REDIS_PASSWORD=your_redis_password  # Optional
+
+# Model Configuration
+MODEL_PATH="app/models/best.pt"
+
+# Security
+SECRET_KEY=your-secret-key-here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
-
-<<<<<<< Updated upstream
-## Server Configuration
-
-### Development Server
-```bash
-# Basic configuration
-uvicorn app.main:app --reload
-
-# Advanced configuration with file size handling
-=======
-## Configuration
-
-### Redis Setup
-```bash
-# Start Redis server
-# On Windows:
-redis-server
-# On Linux/Mac:
-sudo service redis start
-```
-
-### File Size Limits
-The API has a default file size limit of 100MB. To modify:
-1. Update `MAX_UPLOAD_SIZE` in `app/main.py`
-2. Update `MAX_UPLOAD_SIZE` in `app/api/routes.py`
-3. Update Nginx configuration if using (see Deployment section)
 
 ## Running the Application
 
 ### Development Mode
 ```bash
-# Basic configuration
-uvicorn app.main:app --reload
-
-# Advanced configuration (recommended)
->>>>>>> Stashed changes
-uvicorn app.main:app --reload \
-    --limit-concurrency 1 \
-    --timeout-keep-alive 600 \
-    --limit-max-requests 0 \
-    --limit-request-line 0 \
-    --limit-request-fields 0 \
-    --limit-request-field-size 0
-<<<<<<< Updated upstream
-```
-
-### Production Server (using Gunicorn)
-```bash
-# Install gunicorn
-pip install gunicorn
-
-# Run with gunicorn
-gunicorn app.main:app \
-    --workers 4 \
-    --worker-class uvicorn.workers.UvicornWorker \
-    --bind 0.0.0.0:8000 \
-    --timeout 300 \
-    --max-requests 10000 \
-    --max-requests-jitter 1000 \
-    --log-level info
-```
-
-### Nginx Configuration (Production)
-```nginx
-server {
-    listen 80;
-    server_name your_domain.com;
-
-    client_max_body_size 100M;  # Match API's file size limit
-    proxy_read_timeout 300;
-    proxy_connect_timeout 300;
-    proxy_send_timeout 300;
-
-    location / {
-        proxy_pass http://localhost:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
-## API Endpoints
-
-### 1. Health Check
-```http
-GET /api/v1/ping
-```
-
-### 2. License Plate Detection
-```http
-POST /api/v1/detect
-```
-- Form data:
-  - `image`: Image file (≤ 100MB)
-  - `return_processed`: Boolean (optional) - Return processed image with bounding box
-
-### 3. Image Processing
-```http
-POST /api/v1/process-image
-```
-- Form data:
-  - `car_image`: Image file (≤ 100MB)
-  - `custom_text`: String (optional) - Text to overlay on image
-  - `return_type`: String (optional) - 'image' or 'json'
-
-## File Size Limits
-
-The API now includes robust file size validation:
-
-1. Middleware level check (early rejection)
-2. Endpoint level validation
-3. Chunk-based validation for streams
-4. Maximum file size: 100MB
-
-To modify the file size limit:
-1. Update `MAX_UPLOAD_SIZE` in `app/main.py`
-2. Update `MAX_UPLOAD_SIZE` in `app/api/routes.py`
-3. Update `client_max_body_size` in Nginx configuration
-
-## Error Handling
-
-### Common HTTP Status Codes
-- `200`: Success
-- `400`: Bad Request (invalid file format)
-- `413`: Payload Too Large (file > 100MB)
-- `429`: Too Many Requests (rate limit exceeded)
-- `500`: Internal Server Error
-
-### Error Response Format
-```json
-{
-    "detail": "Error message here"
-}
-```
-
-## Logging
-
-The API uses Python's built-in logging module with DEBUG level:
-- Request processing
-- File size validation
-- Model inference
-- Error tracking
-
-Logs are output to stdout by default.
-
-## Development
-
-### Running Tests
-```bash
-pytest tests/
-```
-
-### Code Style
-```bash
-# Install development dependencies
-pip install black isort flake8
-
-# Format code
-black .
-isort .
-flake8 .
-```
-=======
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### Production Mode
 ```bash
-# Install gunicorn
-pip install gunicorn
-
-# Run with gunicorn
-gunicorn app.main:app \
-    --workers 4 \
-    --worker-class uvicorn.workers.UvicornWorker \
-    --bind 0.0.0.0:8000 \
-    --timeout 300 \
-    --max-requests 10000 \
-    --max-requests-jitter 1000 \
-    --log-level info
+# Using gunicorn with uvicorn workers
+gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
 ```
 
 ## API Usage
 
-### 1. Health Check
-```http
-GET /api/v1/ping
+### Detect License Plate
+```bash
+# JSON response
+curl -X POST "http://localhost:8000/api/detect" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@your_image.jpg" \
+     -F "return_type=json"
+
+# Image response
+curl -X POST "http://localhost:8000/api/detect" \
+     -H "accept: image/jpeg" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@your_image.jpg" \
+     -F "return_type=image" \
+     --output result.jpg
 ```
 
-### 2. License Plate Detection
-```http
-POST /api/v1/detect
-```
-- Form data:
-  - `image`: Image file (≤ 100MB)
-  - `return_processed`: Boolean (optional) - Return processed image with bounding box
-
-### 3. Image Processing
-```http
-POST /api/v1/process-image
-```
-- Form data:
-  - `car_image`: Image file (≤ 100MB)
-  - `custom_text`: String (optional) - Text to overlay on image
-  - `return_type`: String (optional) - 'image' or 'json'
+### API Documentation
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
 
 ## Troubleshooting
 
-### Common Issues
+### Redis Connection Issues
+```bash
+# Check Redis status
+redis-cli ping
+# Should return PONG
 
-1. **413 Request Entity Too Large**
-   - Check file size (must be ≤ 100MB)
-   - Verify server configuration
-   - Check Nginx settings if using
+# Start Redis service
+# Windows: Start Redis service from Services
+# Linux: sudo systemctl start redis-server
+# Mac: brew services start redis
+```
 
-2. **Rate Limiting Issues**
-   - Ensure Redis server is running
-   - Check Redis connection in `.env`
-   - Verify rate limit settings
+### Model Loading Issues
+- Ensure `app/models/best.pt` exists
+- Check file permissions
+- Verify model file integrity
 
-3. **Model Loading Issues**
-   - Check CUDA availability
-   - Verify model file path
-   - Check file permissions
+### Port Conflicts
+```bash
+# Check port usage
+# Windows:
+netstat -ano | findstr :8000
+# Linux/Mac:
+lsof -i :8000
 
-### Error Codes
-- `200`: Success
-- `400`: Bad Request (invalid file format)
-- `413`: Payload Too Large (file > 100MB)
-- `429`: Too Many Requests (rate limit exceeded)
-- `500`: Internal Server Error
+# Use different port if needed
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8001
+```
 
 ## Development
 
-### Code Style
-```bash
-# Install development tools
-pip install black isort flake8
-
-# Format code
-black .
-isort .
-flake8 .
+### Code Structure
+```
+app/
+├── api/
+│   ├── routes.py
+│   └── __init__.py
+├── models/
+│   └── best.pt
+├── static/
+├── main.py
+└── __init__.py
 ```
 
-### Testing
-```bash
-# Run tests
-pytest tests/
-```
+### Adding New Features
+1. Create new route in `app/api/routes.py`
+2. Add request/response models
+3. Implement business logic
+4. Add error handling
+5. Update documentation
 
 ## Deployment
 
+### Server Setup
+```bash
+# Update system
+sudo apt update
+sudo apt upgrade -y
+
+# Install required packages
+sudo apt install -y python3-pip python3-venv nginx redis-server supervisor
+
+# Install system dependencies for OpenCV and PyTorch
+sudo apt install -y libgl1-mesa-glx libglib2.0-0
+```
+
+### Application Setup
+```bash
+# Create directory
+sudo mkdir -p /opt/license-plate-api
+cd /opt/license-plate-api
+
+# Clone repository
+git clone https://github.com/SAMARTHD30/Number-Plate-Detection-API.git .
+
+# Create virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+# Install PyTorch (CPU only)
+pip install torch==2.0.1 torchvision==0.15.2 --index-url https://download.pytorch.org/whl/cpu
+
+# Install other dependencies
+pip install -r requirements.txt
+
+# Create necessary directories
+mkdir -p app/models
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+nano .env
+```
+
+### Model Setup
+```bash
+# Ensure the model file is in the correct location
+sudo mkdir -p /opt/license-plate-api/app/models
+sudo cp path/to/your/best.pt /opt/license-plate-api/app/models/
+
+# Set proper permissions
+sudo chown -R www-data:www-data /opt/license-plate-api/app/models
+sudo chmod 755 /opt/license-plate-api/app/models
+```
+
 ### Nginx Configuration
-```nginx
+```bash
+sudo nano /etc/nginx/sites-available/license-plate-api
+
+# Add this configuration:
 server {
     listen 80;
     server_name your_domain.com;
 
-    client_max_body_size 100M;  # Match API's file size limit
-    proxy_read_timeout 300;
-    proxy_connect_timeout 300;
-    proxy_send_timeout 300;
+    # Increase max body size for image uploads
+    client_max_body_size 10M;
 
     location / {
-        proxy_pass http://localhost:8000;
+        proxy_pass http://127.0.0.1:8000;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_connect_timeout 75s;
+        proxy_read_timeout 300s;
     }
 }
+
+# Enable the site
+sudo ln -s /etc/nginx/sites-available/license-plate-api /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
 ```
 
-### Production Checklist
-1. [ ] Configure SSL/HTTPS
-2. [ ] Set up proper authentication
-3. [ ] Configure monitoring and logging
-4. [ ] Set up environment variables
-5. [ ] Configure Nginx (if using)
-6. [ ] Set up backup system
-7. [ ] Configure firewall rules
->>>>>>> Stashed changes
+### Supervisor Configuration
+```bash
+sudo nano /etc/supervisor/conf.d/license-plate-api.conf
+
+# Add this configuration:
+[program:license-plate-api]
+command=/opt/license-plate-api/venv/bin/gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker -b 0.0.0.0:8000 --timeout 300
+directory=/opt/license-plate-api
+user=www-data
+autostart=true
+autorestart=true
+stderr_logfile=/var/log/license-plate-api.err.log
+stdout_logfile=/var/log/license-plate-api.out.log
+environment=PYTHONPATH="/opt/license-plate-api"
+
+# Update supervisor
+sudo supervisorctl reread
+sudo supervisorctl update
+sudo supervisorctl start license-plate-api
+```
+
+### Redis Setup
+```bash
+# Start Redis server
+sudo systemctl start redis-server
+sudo systemctl enable redis-server
+
+# Verify Redis is working
+redis-cli ping
+# Should return "PONG"
+```
+
+### Security Best Practices
+1. Set up SSL/HTTPS using Let's Encrypt
+2. Configure firewall (UFW)
+3. Set proper file permissions
+4. Use environment variables for sensitive data
+5. Set up model access controls
+6. Configure rate limiting in Redis
+
+### Performance Optimization
+1. Adjust worker count based on CPU cores
+2. Configure PyTorch to use available GPU
+3. Optimize model inference batch size
+4. Configure proper timeouts for long-running predictions
+5. Monitor memory usage and adjust as needed
+
+### Monitoring
+```bash
+# Monitor GPU usage (if using CUDA)
+watch -n 1 nvidia-smi
+
+# Monitor CPU and Memory
+htop
+
+# Monitor API requests
+tail -f /var/log/nginx/access.log
+
+# Monitor application errors
+tail -f /var/log/license-plate-api.err.log
+```
 
 ## Contributing
-
 1. Fork the repository
-2. Create your feature branch
+2. Create a feature branch
 3. Commit your changes
 4. Push to the branch
 5. Create a Pull Request
 
 ## License
-
-[MIT License](LICENSE)
+MIT License - See LICENSE file for details
