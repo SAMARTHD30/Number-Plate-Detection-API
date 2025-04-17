@@ -11,6 +11,9 @@ class Settings(BaseSettings):
     PORT: int = int(os.getenv("PORT", 8000))
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
 
+    # Database Configuration
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./app.db")
+
     # Redis Configuration
     REDIS_HOST: str = os.getenv("REDIS_HOST", "localhost")
     REDIS_PORT: int = int(os.getenv("REDIS_PORT", 6379))
@@ -24,6 +27,9 @@ class Settings(BaseSettings):
     MAX_DETECTIONS: int = int(os.getenv("MAX_DETECTIONS", 10))
     OUTPUT_DIR: str = os.getenv("OUTPUT_DIR", "app/static/output")
 
+    # Upload Limits
+    MAX_FILE_SIZE: int = int(os.getenv("MAX_FILE_SIZE", 100 * 1024 * 1024))  # 100MB by default
+
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
@@ -31,5 +37,6 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env"
+        extra = "allow"  # Allow extra fields in the environment
 
 settings = Settings()

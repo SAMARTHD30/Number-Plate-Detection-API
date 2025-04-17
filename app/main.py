@@ -6,25 +6,35 @@ from app.api.routes import router as api_router
 # from fastapi_limiter.depends import RateLimiter
 from dotenv import load_dotenv
 import os
+import logging
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
+from app.core.model import get_model
+from app.core.config import settings
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 # Load environment variables
 load_dotenv()
 
-# Configure maximum upload size (100MB)
-MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100MB in bytes
+# Use settings.MAX_FILE_SIZE from config for consistency
+# MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100MB in bytes
 
 class LimitUploadSize(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         if request.method == "POST":
             if "content-length" in request.headers:
                 content_length = int(request.headers["content-length"])
-                if content_length > MAX_UPLOAD_SIZE:
+                if content_length > settings.MAX_FILE_SIZE:
                     return JSONResponse(
                         status_code=413,
                         content={
-                            "detail": f"File too large. Maximum size allowed is {MAX_UPLOAD_SIZE/1024/1024}MB"
+                            "detail": f"File too large. Maximum size allowed is {settings.MAX_FILE_SIZE/1024/1024}MB"
                         },
                     )
         return await call_next(request)
@@ -46,6 +56,16 @@ app.add_middleware(
 
 # Add file size limit middleware
 app.add_middleware(LimitUploadSize)
+
+@app.on_event("startup")
+async def startup():
+    """Load model on startup to avoid cold start latency"""
+    logger.info("Initializing license plate detection model...")
+    model = get_model()
+    if model is not None:
+        logger.info("✅ Model loaded successfully")
+    else:
+        logger.error("❌ Failed to load model - check logs for details")
 
 # Initialize rate limiter
 # @app.on_event("startup")
