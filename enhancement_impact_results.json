@@ -1,0 +1,1398 @@
+{
+  "summary": {
+    "total_images": 10,
+    "with_enhancement_detections": 9,
+    "without_enhancement_detections": 9,
+    "detection_differences": 0,
+    "improved_with_enhancement": 0,
+    "worsened_with_enhancement": 0,
+    "both_detected_count": 9,
+    "avg_confidence_difference": -0.01306882169511583,
+    "avg_positive_confidence_difference": 0.0006674528121948242,
+    "avg_negative_confidence_difference": -0.014785856008529663,
+    "improved_confidence_count": 1,
+    "worsened_confidence_count": 8,
+    "with_enhancement_detection_rate": 90.0,
+    "without_enhancement_detection_rate": 90.0,
+    "detection_difference_rate": 0.0,
+    "improved_images": [],
+    "worsened_images": [],
+    "significant_improvement_images": [],
+    "significant_worsening_images": []
+  },
+  "detailed_results": [
+    {
+      "image_path": "Dataset/1.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/1.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 1.6889622211456299,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 106.02952848046807,
+          "contrast": 74.7540112394482,
+          "noise_level": 1967.4234458125584
+        },
+        "detections": [
+          {
+            "confidence": 0.9460309743881226,
+            "box": [
+              269,
+              523,
+              517,
+              579
+            ],
+            "aspect_ratio": 4.428571428571429,
+            "area_percentage": 2.389950094648081,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.9460309743881226,
+            "box": [
+              269,
+              523,
+              517,
+              579
+            ],
+            "aspect_ratio": 4.428571428571429,
+            "area_percentage": 2.389950094648081,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.9460309743881226,
+          "box": [
+            269,
+            523,
+            517,
+            579
+          ],
+          "aspect_ratio": 4.428571428571429,
+          "area_percentage": 2.389950094648081,
+          "passes_filters": true
+        },
+        "confidence": 0.9460309743881226,
+        "bounding_box": [
+          269,
+          523,
+          517,
+          579
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/1.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.09086251258850098,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.9498520493507385,
+            "box": [
+              269,
+              523,
+              517,
+              579
+            ],
+            "aspect_ratio": 4.428571428571429,
+            "area_percentage": 2.389950094648081,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.9498520493507385,
+            "box": [
+              269,
+              523,
+              517,
+              579
+            ],
+            "aspect_ratio": 4.428571428571429,
+            "area_percentage": 2.389950094648081,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.9498520493507385,
+          "box": [
+            269,
+            523,
+            517,
+            579
+          ],
+          "aspect_ratio": 4.428571428571429,
+          "area_percentage": 2.389950094648081,
+          "passes_filters": true
+        },
+        "confidence": 0.9498520493507385,
+        "bounding_box": [
+          269,
+          523,
+          517,
+          579
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.003821074962615967,
+      "confidence_ratio": 0.9959771893262452,
+      "iou": 1.0
+    },
+    {
+      "image_path": "Dataset/2.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/2.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08629846572875977,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 138.98033896824356,
+          "contrast": 63.90540155020234,
+          "noise_level": 1544.8290827047163
+        },
+        "detections": [
+          {
+            "confidence": 0.8223227262496948,
+            "box": [
+              87,
+              344,
+              224,
+              425
+            ],
+            "aspect_ratio": 1.691358024691358,
+            "area_percentage": 2.4236666229851918,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8223227262496948,
+            "box": [
+              87,
+              344,
+              224,
+              425
+            ],
+            "aspect_ratio": 1.691358024691358,
+            "area_percentage": 2.4236666229851918,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8223227262496948,
+          "box": [
+            87,
+            344,
+            224,
+            425
+          ],
+          "aspect_ratio": 1.691358024691358,
+          "area_percentage": 2.4236666229851918,
+          "passes_filters": true
+        },
+        "confidence": 0.8223227262496948,
+        "bounding_box": [
+          87,
+          344,
+          224,
+          425
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/2.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.09043359756469727,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.8216552734375,
+            "box": [
+              87,
+              343,
+              224,
+              425
+            ],
+            "aspect_ratio": 1.670731707317073,
+            "area_percentage": 2.453588433145503,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8216552734375,
+            "box": [
+              87,
+              343,
+              224,
+              425
+            ],
+            "aspect_ratio": 1.670731707317073,
+            "area_percentage": 2.453588433145503,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8216552734375,
+          "box": [
+            87,
+            343,
+            224,
+            425
+          ],
+          "aspect_ratio": 1.670731707317073,
+          "area_percentage": 2.453588433145503,
+          "passes_filters": true
+        },
+        "confidence": 0.8216552734375,
+        "bounding_box": [
+          87,
+          343,
+          224,
+          425
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": 0.0006674528121948242,
+      "confidence_ratio": 1.0008123270595009,
+      "iou": 0.9878048780487805
+    },
+    {
+      "image_path": "Dataset/3.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/3.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08836579322814941,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 129.1311282051282,
+          "contrast": 59.801045332249146,
+          "noise_level": 1489.8349504002147
+        },
+        "detections": [
+          {
+            "confidence": 0.6003953814506531,
+            "box": [
+              138,
+              321,
+              279,
+              399
+            ],
+            "aspect_ratio": 1.8076923076923077,
+            "area_percentage": 2.2560000000000002,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.23958826065063477,
+            "box": [
+              323,
+              0,
+              405,
+              58
+            ],
+            "aspect_ratio": 1.4137931034482758,
+            "area_percentage": 0.9755897435897436,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.2270078957080841,
+            "box": [
+              435,
+              0,
+              549,
+              52
+            ],
+            "aspect_ratio": 2.1923076923076925,
+            "area_percentage": 1.216,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.6003953814506531,
+            "box": [
+              138,
+              321,
+              279,
+              399
+            ],
+            "aspect_ratio": 1.8076923076923077,
+            "area_percentage": 2.2560000000000002,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.23958826065063477,
+            "box": [
+              323,
+              0,
+              405,
+              58
+            ],
+            "aspect_ratio": 1.4137931034482758,
+            "area_percentage": 0.9755897435897436,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.2270078957080841,
+            "box": [
+              435,
+              0,
+              549,
+              52
+            ],
+            "aspect_ratio": 2.1923076923076925,
+            "area_percentage": 1.216,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.6003953814506531,
+          "box": [
+            138,
+            321,
+            279,
+            399
+          ],
+          "aspect_ratio": 1.8076923076923077,
+          "area_percentage": 2.2560000000000002,
+          "passes_filters": true
+        },
+        "confidence": 0.6003953814506531,
+        "bounding_box": [
+          138,
+          321,
+          279,
+          399
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/3.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.07788968086242676,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.6204370260238647,
+            "box": [
+              137,
+              319,
+              279,
+              400
+            ],
+            "aspect_ratio": 1.7530864197530864,
+            "area_percentage": 2.359384615384615,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3077332675457001,
+            "box": [
+              326,
+              1,
+              408,
+              57
+            ],
+            "aspect_ratio": 1.4642857142857142,
+            "area_percentage": 0.9419487179487179,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.24057307839393616,
+            "box": [
+              434,
+              0,
+              549,
+              51
+            ],
+            "aspect_ratio": 2.2549019607843137,
+            "area_percentage": 1.203076923076923,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.6204370260238647,
+            "box": [
+              137,
+              319,
+              279,
+              400
+            ],
+            "aspect_ratio": 1.7530864197530864,
+            "area_percentage": 2.359384615384615,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3077332675457001,
+            "box": [
+              326,
+              1,
+              408,
+              57
+            ],
+            "aspect_ratio": 1.4642857142857142,
+            "area_percentage": 0.9419487179487179,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.24057307839393616,
+            "box": [
+              434,
+              0,
+              549,
+              51
+            ],
+            "aspect_ratio": 2.2549019607843137,
+            "area_percentage": 1.203076923076923,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.6204370260238647,
+          "box": [
+            137,
+            319,
+            279,
+            400
+          ],
+          "aspect_ratio": 1.7530864197530864,
+          "area_percentage": 2.359384615384615,
+          "passes_filters": true
+        },
+        "confidence": 0.6204370260238647,
+        "bounding_box": [
+          137,
+          319,
+          279,
+          400
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.02004164457321167,
+      "confidence_ratio": 0.9676975362001674,
+      "iou": 0.9561815336463224
+    },
+    {
+      "image_path": "Dataset/4.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/4.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08280587196350098,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 126.17004116285052,
+          "contrast": 47.012866586943446,
+          "noise_level": 717.4787325574481
+        },
+        "detections": [
+          {
+            "confidence": 0.7856599688529968,
+            "box": [
+              574,
+              312,
+              694,
+              372
+            ],
+            "aspect_ratio": 2.0,
+            "area_percentage": 1.5436068947774633,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.38222554326057434,
+            "box": [
+              195,
+              0,
+              292,
+              54
+            ],
+            "aspect_ratio": 1.7962962962962963,
+            "area_percentage": 1.1229740159506045,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.2581873834133148,
+            "box": [
+              668,
+              18,
+              779,
+              88
+            ],
+            "aspect_ratio": 1.5857142857142856,
+            "area_percentage": 1.665809107280679,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.7856599688529968,
+            "box": [
+              574,
+              312,
+              694,
+              372
+            ],
+            "aspect_ratio": 2.0,
+            "area_percentage": 1.5436068947774633,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.38222554326057434,
+            "box": [
+              195,
+              0,
+              292,
+              54
+            ],
+            "aspect_ratio": 1.7962962962962963,
+            "area_percentage": 1.1229740159506045,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.2581873834133148,
+            "box": [
+              668,
+              18,
+              779,
+              88
+            ],
+            "aspect_ratio": 1.5857142857142856,
+            "area_percentage": 1.665809107280679,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.7856599688529968,
+          "box": [
+            574,
+            312,
+            694,
+            372
+          ],
+          "aspect_ratio": 2.0,
+          "area_percentage": 1.5436068947774633,
+          "passes_filters": true
+        },
+        "confidence": 0.7856599688529968,
+        "bounding_box": [
+          574,
+          312,
+          694,
+          372
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/4.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.08048510551452637,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.8177835941314697,
+            "box": [
+              575,
+              311,
+              694,
+              374
+            ],
+            "aspect_ratio": 1.8888888888888888,
+            "area_percentage": 1.6072806791870338,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3338727653026581,
+            "box": [
+              196,
+              0,
+              292,
+              54
+            ],
+            "aspect_ratio": 1.7777777777777777,
+            "area_percentage": 1.1113969642397736,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.29858070611953735,
+            "box": [
+              670,
+              17,
+              779,
+              89
+            ],
+            "aspect_ratio": 1.5138888888888888,
+            "area_percentage": 1.682531515307435,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8177835941314697,
+            "box": [
+              575,
+              311,
+              694,
+              374
+            ],
+            "aspect_ratio": 1.8888888888888888,
+            "area_percentage": 1.6072806791870338,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3338727653026581,
+            "box": [
+              196,
+              0,
+              292,
+              54
+            ],
+            "aspect_ratio": 1.7777777777777777,
+            "area_percentage": 1.1113969642397736,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.29858070611953735,
+            "box": [
+              670,
+              17,
+              779,
+              89
+            ],
+            "aspect_ratio": 1.5138888888888888,
+            "area_percentage": 1.682531515307435,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8177835941314697,
+          "box": [
+            575,
+            311,
+            694,
+            374
+          ],
+          "aspect_ratio": 1.8888888888888888,
+          "area_percentage": 1.6072806791870338,
+          "passes_filters": true
+        },
+        "confidence": 0.8177835941314697,
+        "bounding_box": [
+          575,
+          311,
+          694,
+          374
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.0321236252784729,
+      "confidence_ratio": 0.9607186723859508,
+      "iou": 0.944819372766971
+    },
+    {
+      "image_path": "Dataset/5.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/5.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08658504486083984,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 110.98916260445682,
+          "contrast": 61.24038671935378,
+          "noise_level": 3216.5301333004363
+        },
+        "detections": [
+          {
+            "confidence": 0.9175639152526855,
+            "box": [
+              257,
+              447,
+              504,
+              506
+            ],
+            "aspect_ratio": 4.186440677966102,
+            "area_percentage": 2.6427939298978647,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.9175639152526855,
+            "box": [
+              257,
+              447,
+              504,
+              506
+            ],
+            "aspect_ratio": 4.186440677966102,
+            "area_percentage": 2.6427939298978647,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.9175639152526855,
+          "box": [
+            257,
+            447,
+            504,
+            506
+          ],
+          "aspect_ratio": 4.186440677966102,
+          "area_percentage": 2.6427939298978647,
+          "passes_filters": true
+        },
+        "confidence": 0.9175639152526855,
+        "bounding_box": [
+          257,
+          447,
+          504,
+          506
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/5.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.07504534721374512,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.9323112964630127,
+            "box": [
+              257,
+              447,
+              504,
+              507
+            ],
+            "aspect_ratio": 4.116666666666666,
+            "area_percentage": 2.6875870473537606,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.9323112964630127,
+            "box": [
+              257,
+              447,
+              504,
+              507
+            ],
+            "aspect_ratio": 4.116666666666666,
+            "area_percentage": 2.6875870473537606,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.9323112964630127,
+          "box": [
+            257,
+            447,
+            504,
+            507
+          ],
+          "aspect_ratio": 4.116666666666666,
+          "area_percentage": 2.6875870473537606,
+          "passes_filters": true
+        },
+        "confidence": 0.9323112964630127,
+        "bounding_box": [
+          257,
+          447,
+          504,
+          507
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.014747381210327148,
+      "confidence_ratio": 0.9841819129873514,
+      "iou": 0.9833333333333333
+    },
+    {
+      "image_path": "Dataset/6.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/6.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08679413795471191,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 118.42222879684418,
+          "contrast": 55.569877453094165,
+          "noise_level": 1098.1363916663965
+        },
+        "detections": [
+          {
+            "confidence": 0.8752785325050354,
+            "box": [
+              288,
+              426,
+              479,
+              469
+            ],
+            "aspect_ratio": 4.441860465116279,
+            "area_percentage": 1.7999123383738769,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8752785325050354,
+            "box": [
+              288,
+              426,
+              479,
+              469
+            ],
+            "aspect_ratio": 4.441860465116279,
+            "area_percentage": 1.7999123383738769,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8752785325050354,
+          "box": [
+            288,
+            426,
+            479,
+            469
+          ],
+          "aspect_ratio": 4.441860465116279,
+          "area_percentage": 1.7999123383738769,
+          "passes_filters": true
+        },
+        "confidence": 0.8752785325050354,
+        "bounding_box": [
+          288,
+          426,
+          479,
+          469
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/6.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.08559179306030273,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.8768408894538879,
+            "box": [
+              286,
+              427,
+              485,
+              471
+            ],
+            "aspect_ratio": 4.5227272727272725,
+            "area_percentage": 1.9189129958360727,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8768408894538879,
+            "box": [
+              286,
+              427,
+              485,
+              471
+            ],
+            "aspect_ratio": 4.5227272727272725,
+            "area_percentage": 1.9189129958360727,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8768408894538879,
+          "box": [
+            286,
+            427,
+            485,
+            471
+          ],
+          "aspect_ratio": 4.5227272727272725,
+          "area_percentage": 1.9189129958360727,
+          "passes_filters": true
+        },
+        "confidence": 0.8768408894538879,
+        "bounding_box": [
+          286,
+          427,
+          485,
+          471
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.001562356948852539,
+      "confidence_ratio": 0.9982181978878453,
+      "iou": 0.8966133899631161
+    },
+    {
+      "image_path": "Dataset/7.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/7.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08367538452148438,
+        "detection_found": false,
+        "enhancement_stats": {
+          "brightness": 119.17120534735919,
+          "contrast": 65.4645982101692,
+          "noise_level": 2014.061061370986
+        },
+        "detections": []
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/7.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.08617663383483887,
+        "detection_found": false,
+        "detections": []
+      },
+      "detection_difference": false
+    },
+    {
+      "image_path": "Dataset/8.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/8.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.10185027122497559,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 116.41851632697787,
+          "contrast": 60.271169411865905,
+          "noise_level": 1453.8863948245435
+        },
+        "detections": [
+          {
+            "confidence": 0.7697824239730835,
+            "box": [
+              84,
+              361,
+              224,
+              427
+            ],
+            "aspect_ratio": 2.121212121212121,
+            "area_percentage": 2.024983563445102,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.28655919432640076,
+            "box": [
+              307,
+              276,
+              437,
+              333
+            ],
+            "aspect_ratio": 2.280701754385965,
+            "area_percentage": 1.6239316239316242,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.7697824239730835,
+            "box": [
+              84,
+              361,
+              224,
+              427
+            ],
+            "aspect_ratio": 2.121212121212121,
+            "area_percentage": 2.024983563445102,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.28655919432640076,
+            "box": [
+              307,
+              276,
+              437,
+              333
+            ],
+            "aspect_ratio": 2.280701754385965,
+            "area_percentage": 1.6239316239316242,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.7697824239730835,
+          "box": [
+            84,
+            361,
+            224,
+            427
+          ],
+          "aspect_ratio": 2.121212121212121,
+          "area_percentage": 2.024983563445102,
+          "passes_filters": true
+        },
+        "confidence": 0.7697824239730835,
+        "bounding_box": [
+          84,
+          361,
+          224,
+          427
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/8.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.0814371109008789,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.7728850841522217,
+            "box": [
+              85,
+              361,
+              224,
+              429
+            ],
+            "aspect_ratio": 2.0441176470588234,
+            "area_percentage": 2.0714442252903793,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3011505901813507,
+            "box": [
+              306,
+              279,
+              437,
+              338
+            ],
+            "aspect_ratio": 2.2203389830508473,
+            "area_percentage": 1.6938417707648474,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.7728850841522217,
+            "box": [
+              85,
+              361,
+              224,
+              429
+            ],
+            "aspect_ratio": 2.0441176470588234,
+            "area_percentage": 2.0714442252903793,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.3011505901813507,
+            "box": [
+              306,
+              279,
+              437,
+              338
+            ],
+            "aspect_ratio": 2.2203389830508473,
+            "area_percentage": 1.6938417707648474,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.7728850841522217,
+          "box": [
+            85,
+            361,
+            224,
+            429
+          ],
+          "aspect_ratio": 2.0441176470588234,
+          "area_percentage": 2.0714442252903793,
+          "passes_filters": true
+        },
+        "confidence": 0.7728850841522217,
+        "bounding_box": [
+          85,
+          361,
+          224,
+          429
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.0031026601791381836,
+      "confidence_ratio": 0.9959856125538488,
+      "iou": 0.9638579533515444
+    },
+    {
+      "image_path": "Dataset/9.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/9.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.09042835235595703,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 120.62331360946746,
+          "contrast": 62.50711613031962,
+          "noise_level": 1583.2299059434938
+        },
+        "detections": [
+          {
+            "confidence": 0.80650794506073,
+            "box": [
+              146,
+              381,
+              300,
+              438
+            ],
+            "aspect_ratio": 2.7017543859649122,
+            "area_percentage": 1.9237343852728468,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.5910651087760925,
+            "box": [
+              364,
+              275,
+              507,
+              343
+            ],
+            "aspect_ratio": 2.1029411764705883,
+            "area_percentage": 2.131054131054131,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.80650794506073,
+            "box": [
+              146,
+              381,
+              300,
+              438
+            ],
+            "aspect_ratio": 2.7017543859649122,
+            "area_percentage": 1.9237343852728468,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.5910651087760925,
+            "box": [
+              364,
+              275,
+              507,
+              343
+            ],
+            "aspect_ratio": 2.1029411764705883,
+            "area_percentage": 2.131054131054131,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.80650794506073,
+          "box": [
+            146,
+            381,
+            300,
+            438
+          ],
+          "aspect_ratio": 2.7017543859649122,
+          "area_percentage": 1.9237343852728468,
+          "passes_filters": true
+        },
+        "confidence": 0.80650794506073,
+        "bounding_box": [
+          146,
+          381,
+          300,
+          438
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/9.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.08749008178710938,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.8192373514175415,
+            "box": [
+              146,
+              382,
+              299,
+              439
+            ],
+            "aspect_ratio": 2.6842105263157894,
+            "area_percentage": 1.911242603550296,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.6866622567176819,
+            "box": [
+              367,
+              268,
+              507,
+              342
+            ],
+            "aspect_ratio": 1.8918918918918919,
+            "area_percentage": 2.2704361165899627,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.8192373514175415,
+            "box": [
+              146,
+              382,
+              299,
+              439
+            ],
+            "aspect_ratio": 2.6842105263157894,
+            "area_percentage": 1.911242603550296,
+            "passes_filters": true
+          },
+          {
+            "confidence": 0.6866622567176819,
+            "box": [
+              367,
+              268,
+              507,
+              342
+            ],
+            "aspect_ratio": 1.8918918918918919,
+            "area_percentage": 2.2704361165899627,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.8192373514175415,
+          "box": [
+            146,
+            382,
+            299,
+            439
+          ],
+          "aspect_ratio": 2.6842105263157894,
+          "area_percentage": 1.911242603550296,
+          "passes_filters": true
+        },
+        "confidence": 0.8192373514175415,
+        "bounding_box": [
+          146,
+          382,
+          299,
+          439
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.012729406356811523,
+      "confidence_ratio": 0.9844618823411975,
+      "iou": 0.9593550554249244
+    },
+    {
+      "image_path": "Dataset/10.jpeg",
+      "with_enhancement": {
+        "image_path": "Dataset/10.jpeg",
+        "enhancement_applied": true,
+        "inference_time": 0.08761096000671387,
+        "detection_found": true,
+        "enhancement_stats": {
+          "brightness": 119.40249835634451,
+          "contrast": 66.35717096110706,
+          "noise_level": 1102.899120879893
+        },
+        "detections": [
+          {
+            "confidence": 0.6547935009002686,
+            "box": [
+              639,
+              299,
+              723,
+              361
+            ],
+            "aspect_ratio": 1.3548387096774193,
+            "area_percentage": 1.141354372123603,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.6547935009002686,
+            "box": [
+              639,
+              299,
+              723,
+              361
+            ],
+            "aspect_ratio": 1.3548387096774193,
+            "area_percentage": 1.141354372123603,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.6547935009002686,
+          "box": [
+            639,
+            299,
+            723,
+            361
+          ],
+          "aspect_ratio": 1.3548387096774193,
+          "area_percentage": 1.141354372123603,
+          "passes_filters": true
+        },
+        "confidence": 0.6547935009002686,
+        "bounding_box": [
+          639,
+          299,
+          723,
+          361
+        ]
+      },
+      "without_enhancement": {
+        "image_path": "Dataset/10.jpeg",
+        "enhancement_applied": false,
+        "inference_time": 0.0800008773803711,
+        "detection_found": true,
+        "detections": [
+          {
+            "confidence": 0.6849521994590759,
+            "box": [
+              639,
+              300,
+              722,
+              361
+            ],
+            "aspect_ratio": 1.360655737704918,
+            "area_percentage": 1.1095770326539558,
+            "passes_filters": true
+          }
+        ],
+        "valid_detections": [
+          {
+            "confidence": 0.6849521994590759,
+            "box": [
+              639,
+              300,
+              722,
+              361
+            ],
+            "aspect_ratio": 1.360655737704918,
+            "area_percentage": 1.1095770326539558,
+            "passes_filters": true
+          }
+        ],
+        "best_detection": {
+          "confidence": 0.6849521994590759,
+          "box": [
+            639,
+            300,
+            722,
+            361
+          ],
+          "aspect_ratio": 1.360655737704918,
+          "area_percentage": 1.1095770326539558,
+          "passes_filters": true
+        },
+        "confidence": 0.6849521994590759,
+        "bounding_box": [
+          639,
+          300,
+          722,
+          361
+        ]
+      },
+      "detection_difference": false,
+      "confidence_difference": -0.030158698558807373,
+      "confidence_ratio": 0.9559696303148972,
+      "iou": 0.97215821812596
+    }
+  ]
+}

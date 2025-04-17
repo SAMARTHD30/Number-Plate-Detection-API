@@ -1,0 +1,800 @@
+[
+  {
+    "image_path": "Dataset\\1.jpeg",
+    "inference_time": 1.6403589248657227,
+    "detections": [
+      {
+        "confidence": 0.9498520493507385,
+        "box": [
+          269,
+          523,
+          517,
+          579
+        ],
+        "aspect_ratio": 4.428571428571429,
+        "area_percentage": 2.389950094648081,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": true
+        }
+      },
+      {
+        "confidence": 0.11082363873720169,
+        "box": [
+          47,
+          8,
+          152,
+          44
+        ],
+        "aspect_ratio": 2.9166666666666665,
+        "area_percentage": 0.6504904491481672,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.0982220321893692,
+        "box": [
+          10,
+          6,
+          153,
+          47
+        ],
+        "aspect_ratio": 3.4878048780487805,
+        "area_percentage": 1.0089485458612977,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.03880631923675537,
+        "box": [
+          265,
+          518,
+          523,
+          600
+        ],
+        "aspect_ratio": 3.1463414634146343,
+        "area_percentage": 3.6406814661848217,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01980169117450714,
+        "box": [
+          392,
+          4,
+          510,
+          28
+        ],
+        "aspect_ratio": 4.916666666666667,
+        "area_percentage": 0.48735157459989675,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.017713559791445732,
+        "box": [
+          0,
+          3,
+          153,
+          120
+        ],
+        "aspect_ratio": 1.3076923076923077,
+        "area_percentage": 3.0805369127516777,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01245417445898056,
+        "box": [
+          53,
+          20,
+          144,
+          44
+        ],
+        "aspect_ratio": 3.7916666666666665,
+        "area_percentage": 0.37583892617449666,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.012039681896567345,
+        "box": [
+          425,
+          525,
+          519,
+          578
+        ],
+        "aspect_ratio": 1.7735849056603774,
+        "area_percentage": 0.8573395284804681,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "Dataset\\10.jpeg",
+    "inference_time": 1.6109387874603271,
+    "detections": [
+      {
+        "confidence": 0.6849521994590759,
+        "box": [
+          639,
+          300,
+          722,
+          361
+        ],
+        "aspect_ratio": 1.360655737704918,
+        "area_percentage": 1.1095770326539558,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": true
+        }
+      },
+      {
+        "confidence": 0.048536304384469986,
+        "box": [
+          616,
+          540,
+          718,
+          572
+        ],
+        "aspect_ratio": 3.1875,
+        "area_percentage": 0.715318869165023,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.047998569905757904,
+        "box": [
+          12,
+          463,
+          757,
+          584
+        ],
+        "aspect_ratio": 6.1570247933884295,
+        "area_percentage": 19.755643217181678,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.04292654991149902,
+        "box": [
+          589,
+          535,
+          717,
+          575
+        ],
+        "aspect_ratio": 3.2,
+        "area_percentage": 1.1220688143765067,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.04134984686970711,
+        "box": [
+          641,
+          543,
+          717,
+          572
+        ],
+        "aspect_ratio": 2.6206896551724137,
+        "area_percentage": 0.4830155599386369,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.03217560797929764,
+        "box": [
+          44,
+          537,
+          364,
+          581
+        ],
+        "aspect_ratio": 7.2727272727272725,
+        "area_percentage": 3.085689239535393,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.031587064266204834,
+        "box": [
+          476,
+          255,
+          588,
+          300
+        ],
+        "aspect_ratio": 2.488888888888889,
+        "area_percentage": 1.1045364891518739,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.026337267830967903,
+        "box": [
+          569,
+          526,
+          717,
+          577
+        ],
+        "aspect_ratio": 2.9019607843137254,
+        "area_percentage": 1.6541748849441158,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.0240806732326746,
+        "box": [
+          14,
+          506,
+          762,
+          584
+        ],
+        "aspect_ratio": 9.58974358974359,
+        "area_percentage": 12.786324786324787,
+        "would_pass_normal_filters": {
+          "aspect_ratio": false,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.021255064755678177,
+        "box": [
+          22,
+          498,
+          674,
+          584
+        ],
+        "aspect_ratio": 7.5813953488372094,
+        "area_percentage": 12.288406749945212,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01717858389019966,
+        "box": [
+          25,
+          451,
+          665,
+          584
+        ],
+        "aspect_ratio": 4.81203007518797,
+        "area_percentage": 18.65439403900942,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01424477994441986,
+        "box": [
+          553,
+          497,
+          715,
+          578
+        ],
+        "aspect_ratio": 2.0,
+        "area_percentage": 2.8757396449704142,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.012517683207988739,
+        "box": [
+          484,
+          542,
+          585,
+          576
+        ],
+        "aspect_ratio": 2.9705882352941178,
+        "area_percentage": 0.752575060267368,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.011171317659318447,
+        "box": [
+          270,
+          537,
+          481,
+          580
+        ],
+        "aspect_ratio": 4.906976744186046,
+        "area_percentage": 1.9883848345386808,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.011146710254251957,
+        "box": [
+          207,
+          535,
+          453,
+          580
+        ],
+        "aspect_ratio": 5.466666666666667,
+        "area_percentage": 2.42603550295858,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01057600136846304,
+        "box": [
+          647,
+          101,
+          688,
+          127
+        ],
+        "aspect_ratio": 1.5769230769230769,
+        "area_percentage": 0.23361823361823364,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.010488457977771759,
+        "box": [
+          351,
+          535,
+          450,
+          581
+        ],
+        "aspect_ratio": 2.152173913043478,
+        "area_percentage": 0.9980276134122288,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.010395086370408535,
+        "box": [
+          488,
+          527,
+          719,
+          576
+        ],
+        "aspect_ratio": 4.714285714285714,
+        "area_percentage": 2.4806048652202497,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01038309931755066,
+        "box": [
+          461,
+          543,
+          581,
+          581
+        ],
+        "aspect_ratio": 3.1578947368421053,
+        "area_percentage": 0.9993425378040762,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.010374479927122593,
+        "box": [
+          608,
+          296,
+          724,
+          364
+        ],
+        "aspect_ratio": 1.7058823529411764,
+        "area_percentage": 1.7286872671488054,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.010264348238706589,
+        "box": [
+          306,
+          534,
+          447,
+          580
+        ],
+        "aspect_ratio": 3.0652173913043477,
+        "area_percentage": 1.4214332675871137,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "Dataset\\11.jpeg",
+    "inference_time": 1.6848053932189941,
+    "detections": [
+      {
+        "confidence": 0.048112012445926666,
+        "box": [
+          421,
+          537,
+          564,
+          581
+        ],
+        "aspect_ratio": 3.25,
+        "area_percentage": 1.378917378917379,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.028667695820331573,
+        "box": [
+          450,
+          540,
+          569,
+          580
+        ],
+        "aspect_ratio": 2.975,
+        "area_percentage": 1.0431733508656587,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.02055640146136284,
+        "box": [
+          382,
+          540,
+          556,
+          584
+        ],
+        "aspect_ratio": 3.9545454545454546,
+        "area_percentage": 1.6778435239973701,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.02016730047762394,
+        "box": [
+          168,
+          5,
+          299,
+          55
+        ],
+        "aspect_ratio": 2.62,
+        "area_percentage": 1.43545912776682,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.014717658050358295,
+        "box": [
+          65,
+          26,
+          124,
+          54
+        ],
+        "aspect_ratio": 2.107142857142857,
+        "area_percentage": 0.3620425158886697,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01016178447753191,
+        "box": [
+          77,
+          501,
+          545,
+          584
+        ],
+        "aspect_ratio": 5.63855421686747,
+        "area_percentage": 8.512820512820513,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "Dataset\\12.jpeg",
+    "inference_time": 1.6763584613800049,
+    "detections": [
+      {
+        "confidence": 0.8117560744285583,
+        "box": [
+          301,
+          634,
+          497,
+          679
+        ],
+        "aspect_ratio": 4.355555555555555,
+        "area_percentage": 1.0872781065088757,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": true
+        }
+      },
+      {
+        "confidence": 0.08102081716060638,
+        "box": [
+          299,
+          622,
+          496,
+          698
+        ],
+        "aspect_ratio": 2.5921052631578947,
+        "area_percentage": 1.8456607495069035,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.04014436900615692,
+        "box": [
+          216,
+          206,
+          343,
+          256
+        ],
+        "aspect_ratio": 2.54,
+        "area_percentage": 0.7827909270216963,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.03784452751278877,
+        "box": [
+          263,
+          380,
+          512,
+          540
+        ],
+        "aspect_ratio": 1.55625,
+        "area_percentage": 4.911242603550296,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.03053070232272148,
+        "box": [
+          360,
+          550,
+          425,
+          596
+        ],
+        "aspect_ratio": 1.4130434782608696,
+        "area_percentage": 0.36858974358974356,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01672259345650673,
+        "box": [
+          63,
+          378,
+          507,
+          514
+        ],
+        "aspect_ratio": 3.264705882352941,
+        "area_percentage": 7.443786982248521,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.01609170436859131,
+        "box": [
+          303,
+          642,
+          471,
+          680
+        ],
+        "aspect_ratio": 4.421052631578948,
+        "area_percentage": 0.7869822485207101,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.011051450856029987,
+        "box": [
+          179,
+          506,
+          252,
+          568
+        ],
+        "aspect_ratio": 1.1774193548387097,
+        "area_percentage": 0.5579388560157791,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.010778414085507393,
+        "box": [
+          0,
+          372,
+          508,
+          571
+        ],
+        "aspect_ratio": 2.5527638190954773,
+        "area_percentage": 12.462031558185405,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      }
+    ]
+  },
+  {
+    "image_path": "Dataset\\13.jpeg",
+    "inference_time": 1.6660919189453125,
+    "detections": [
+      {
+        "confidence": 0.3480673134326935,
+        "box": [
+          617,
+          574,
+          712,
+          635
+        ],
+        "aspect_ratio": 1.5573770491803278,
+        "area_percentage": 0.7143737672583826,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": true
+        }
+      },
+      {
+        "confidence": 0.031752318143844604,
+        "box": [
+          615,
+          563,
+          713,
+          648
+        ],
+        "aspect_ratio": 1.1529411764705881,
+        "area_percentage": 1.0268737672583828,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.02370329387485981,
+        "box": [
+          617,
+          564,
+          702,
+          624
+        ],
+        "aspect_ratio": 1.4166666666666667,
+        "area_percentage": 0.628698224852071,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      },
+      {
+        "confidence": 0.022040583193302155,
+        "box": [
+          621,
+          578,
+          700,
+          629
+        ],
+        "aspect_ratio": 1.5490196078431373,
+        "area_percentage": 0.4966715976331361,
+        "would_pass_normal_filters": {
+          "aspect_ratio": true,
+          "area_percentage": true,
+          "confidence": false
+        }
+      }
+    ]
+  }
+]

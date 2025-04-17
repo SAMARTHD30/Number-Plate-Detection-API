@@ -1,0 +1,317 @@
+[
+  {
+    "config": {
+      "conf": 0.15,
+      "iou": 0.3,
+      "skip_enhancement": true
+    },
+    "detections": 3,
+    "total_confidence": 1.7179441452026367,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.5726480484008789
+  },
+  {
+    "config": {
+      "conf": 0.15,
+      "iou": 0.3,
+      "skip_enhancement": false
+    },
+    "detections": 3,
+    "total_confidence": 1.7553477734327316,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6775128245353699
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.22779475152492523
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8500401973724365
+      }
+    ],
+    "avg_confidence": 0.5851159244775772
+  },
+  {
+    "config": {
+      "conf": 0.05,
+      "iou": 0.3,
+      "skip_enhancement": true
+    },
+    "detections": 4,
+    "total_confidence": 1.8003360033035278,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.08239185810089111
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.45008400082588196
+  },
+  {
+    "config": {
+      "conf": 0.01,
+      "iou": 0.3,
+      "skip_enhancement": true
+    },
+    "detections": 5,
+    "total_confidence": 1.8146035391837358,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\61.jpeg",
+        "detection_found": true,
+        "confidence": 0.014267535880208015
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.08239185810089111
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.3629207078367472
+  },
+  {
+    "config": {
+      "conf": 0.15,
+      "iou": 0.2,
+      "skip_enhancement": true
+    },
+    "detections": 3,
+    "total_confidence": 1.7179441452026367,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.5726480484008789
+  },
+  {
+    "config": {
+      "conf": 0.15,
+      "iou": 0.1,
+      "skip_enhancement": true
+    },
+    "detections": 3,
+    "total_confidence": 1.7179441452026367,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.5726480484008789
+  },
+  {
+    "config": {
+      "conf": 0.05,
+      "iou": 0.2,
+      "skip_enhancement": true
+    },
+    "detections": 4,
+    "total_confidence": 1.8003360033035278,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.08239185810089111
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.45008400082588196
+  },
+  {
+    "config": {
+      "conf": 0.01,
+      "iou": 0.1,
+      "skip_enhancement": true
+    },
+    "detections": 5,
+    "total_confidence": 1.8146035391837358,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6519699692726135
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.2314382791519165
+      },
+      {
+        "image": "Dataset\\61.jpeg",
+        "detection_found": true,
+        "confidence": 0.014267535880208015
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.08239185810089111
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8345358967781067
+      }
+    ],
+    "avg_confidence": 0.3629207078367472
+  },
+  {
+    "config": {
+      "conf": 0.05,
+      "iou": 0.2,
+      "skip_enhancement": false
+    },
+    "detections": 4,
+    "total_confidence": 1.8454284742474556,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6775128245353699
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.22779475152492523
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.09008070081472397
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8500401973724365
+      }
+    ],
+    "avg_confidence": 0.4613571185618639
+  },
+  {
+    "config": {
+      "conf": 0.01,
+      "iou": 0.1,
+      "skip_enhancement": false
+    },
+    "detections": 5,
+    "total_confidence": 1.8613097611814737,
+    "image_results": [
+      {
+        "image": "Dataset\\46.jpeg",
+        "detection_found": true,
+        "confidence": 0.6775128245353699
+      },
+      {
+        "image": "Dataset\\14.jpeg",
+        "detection_found": true,
+        "confidence": 0.22779475152492523
+      },
+      {
+        "image": "Dataset\\61.jpeg",
+        "detection_found": true,
+        "confidence": 0.015881286934018135
+      },
+      {
+        "image": "Dataset\\16.jpeg",
+        "detection_found": true,
+        "confidence": 0.09008070081472397
+      },
+      {
+        "image": "Dataset\\20.jpeg",
+        "detection_found": true,
+        "confidence": 0.8500401973724365
+      }
+    ],
+    "avg_confidence": 0.37226195223629477
+  }
+]

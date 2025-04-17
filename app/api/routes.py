@@ -11,8 +11,10 @@ from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 import traceback
 from pathlib import Path
-from app.core.model import get_model, preprocess_image
+from app.core.model import get_model, preprocess_image, map_coordinates_to_original
 from app.core.config import settings
+import time
+import os
 
 # Configure logging
 logging.basicConfig(
@@ -88,19 +90,30 @@ async def ping():
     }
 
 @router.post("/detect", status_code=200)
-async def detect(request: Request,
-                car_image: UploadFile = File(...),
-                conf_threshold: float = Form(0.2),
-                return_type: str = Form("json"),
-                custom_text: Optional[str] = Form(None)):
+async def detect(
+    request: Request,
+    car_image: UploadFile = File(...),
+    conf_threshold: float = Form(0.1),  # Lowered default threshold
+    return_type: str = Form("json"),
+    custom_text: Optional[str] = Form(None),
+    skip_enhancement: bool = Form(False),  # Changed default to False to enable enhancement
+    iou_threshold: float = Form(0.1)
+):
     """
-    Detect and read license plate from an image.
+    Detect license plates in the provided car image.
 
-    Args:
-        car_image (UploadFile): The image containing the license plate.
-        conf_threshold (float): Confidence threshold for detection. Defaults to 0.2.
-        return_type (str): Return type. Either "json" or "image". Defaults to "json".
-        custom_text (str, optional): Custom text to add to the image. Defaults to None.
+    Parameters:
+    - car_image: Image file
+    - conf_threshold: Confidence threshold for detections (0.0-1.0)
+    - return_type: Return format ("json" or "image")
+    - custom_text: Optional text to add to image output
+    - skip_enhancement: Skip image enhancement if True
+    - iou_threshold: IoU threshold for NMS
+
+    Returns:
+    - JSON: Detection results
+    - or
+    - Image: Annotated image with detection
     """
     try:
         # Start timing
@@ -139,164 +152,75 @@ async def detect(request: Request,
         # Log image dimensions
         logger.info(f"Image dimensions: {image.shape}")
 
-        # Get the YOLO model
-        model = get_model()
-        if model is None:
-            raise HTTPException(
-                status_code=500,
-                detail="Failed to load model"
-            )
+        # Perform license plate detection directly to ensure consistent results
+        detection_result = detect_license_plate(
+            image=image,
+            conf_threshold=conf_threshold,
+            skip_enhancement=skip_enhancement
+        )
 
-        # Extract regions where license plates are likely to be found
-        regions = focus_license_plate_regions(image)
-        logger.info(f"Found {len(regions)} regions to analyze for license plates")
-
-        # Initialize response
-        detection_result = {
-            "detection_found": False,
-            "plate_text": None,
-            "confidence": None,
+        # Transform the result into the expected format
+        api_result = {
+            "detection_found": detection_result["success"],
+            "plate_text": None,  # No OCR implemented yet
+            "confidence": detection_result["confidence"] if detection_result["success"] else None,
             "bounding_box": None
         }
 
-        best_confidence = 0.0
-        best_plate = None
-        best_box = None
+        # Extract the best detection if available
+        if detection_result["success"] and detection_result["detections"]:
+            best_detection = None
+            for detection in detection_result["detections"]:
+                if best_detection is None or detection["confidence"] > best_detection["confidence"]:
+                    best_detection = detection
 
-        # Process each region for license plate detection
-        for i, region in enumerate(regions):
-            logger.info(f"Processing region {i+1}/{len(regions)}")
-
-            # Preprocess the image for the model
-            processed_img = preprocess_image(region)
-
-            # Run inference
-            results = model.predict(
-                source=processed_img,
-                conf=conf_threshold,
-                iou=0.3,  # Lower IOU for license plates
-                verbose=False
-            )
-
-            # Check if there are any detections
-            if not results or len(results) == 0:
-                logger.info(f"No detections in region {i+1}")
-                continue
-
-            # Get the first result
-            result = results[0]
-
-            # Check if there are any boxes
-            if not hasattr(result, 'boxes') or len(result.boxes) == 0:
-                logger.info(f"No boxes in region {i+1}")
-                continue
-
-            # Get all detections
-            boxes = result.boxes
-
-            # Filter by aspect ratio (license plates are typically wider than tall)
-            filtered_indices = []
-            for j, box in enumerate(boxes):
-                try:
-                    # Get coordinates
-                    x1, y1, x2, y2 = map(float, box.xyxy[0].tolist())
-                    width = x2 - x1
-                    height = y2 - y1
-
-                    # Skip if dimensions are invalid
-                    if width <= 0 or height <= 0:
-                        continue
-
-                    # Calculate aspect ratio (width/height)
-                    aspect_ratio = width / height
-
-                    # License plates typically have aspect ratios between 1:1 and 8:1 (more inclusive)
-                    if 1.0 <= aspect_ratio <= 8.0:
-                        # Calculate relative area
-                        img_area = region.shape[0] * region.shape[1]
-                        box_area = width * height
-                        area_percentage = (box_area / img_area) * 100
-
-                        # License plates typically occupy 0.2-30% of a focused region (more inclusive)
-                        if 0.2 <= area_percentage <= 30.0:
-                            filtered_indices.append(j)
-                            logger.info(f"Candidate plate: aspect={aspect_ratio:.2f}, area={area_percentage:.2f}%, conf={float(box.conf[0]):.2f}")
-                    else:
-                        logger.debug(f"Rejected by aspect ratio: {aspect_ratio:.2f}")
-
-                except Exception as e:
-                    logger.error(f"Error filtering box {j}: {str(e)}")
-
-            # Process filtered boxes
-            for j in filtered_indices:
-                box = boxes[j]
-                confidence = float(box.conf[0])
-
-                # If confidence is higher than previous best, update
-                if confidence > best_confidence:
-                    # Extract text from box
-                    x1, y1, x2, y2 = map(int, box.xyxy[0].tolist())
-
-                    # Get the license plate text (simulated)
-                    plate_text = "ABC123"  # Replace with actual OCR in production
-
-                    # Update best detection
-                    best_confidence = confidence
-                    best_plate = plate_text
-                    best_box = {
-                        "x1": int(x1),
-                        "y1": int(y1),
-                        "x2": int(x2),
-                        "y2": int(y2),
-                        "region_index": i
-                    }
-
-                    logger.info(f"Found better plate: {plate_text} with conf={confidence:.2f}")
-
-        # Check if we found any valid license plate
-        if best_plate is not None:
-            detection_result["detection_found"] = True
-            detection_result["plate_text"] = best_plate
-            detection_result["confidence"] = best_confidence
-            detection_result["bounding_box"] = best_box
+            if best_detection:
+                x1, y1, x2, y2 = best_detection["box"]
+                api_result["bounding_box"] = {
+                    "x1": x1,
+                    "y1": y1,
+                    "x2": x2,
+                    "y2": y2
+                }
 
         # Calculate processing time
         processing_time = (datetime.now() - start_time).total_seconds()
-        detection_result["processing_time"] = processing_time
+        api_result["processing_time"] = processing_time
 
         logger.info(f"Detection completed in {processing_time:.2f} seconds")
-        logger.info(f"Detection result: {detection_result}")
+        logger.info(f"Detection result: {api_result}")
 
         # Return the result based on return_type
         if return_type.lower() == "json":
-            return detection_result
+            return api_result
         else:
             # If return type is image, create an annotated image
             annotated_img = image.copy()
 
-            if detection_result["detection_found"]:
-                # Get the coordinates
-                box = detection_result["bounding_box"]
+            # If detection found, draw bounding box
+            if api_result["detection_found"] and api_result["bounding_box"]:
+                box = api_result["bounding_box"]
                 x1, y1, x2, y2 = box["x1"], box["y1"], box["x2"], box["y2"]
 
-                # Draw rectangle on the image
+                # Draw rectangle around license plate
                 cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (0, 255, 0), 2)
 
-                # Put text on the image
-                plate_text = detection_result["plate_text"]
-                confidence = detection_result["confidence"]
-                text = f"{plate_text} ({confidence:.2f})"
-                cv2.putText(annotated_img, text, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                # Add confidence text
+                conf_text = f"Conf: {api_result['confidence']:.2f}"
+                cv2.putText(annotated_img, conf_text, (x1, y1 - 10),
+                          cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # Add custom text if provided
             if custom_text:
-                cv2.putText(annotated_img, custom_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                # Place at top-left corner
+                cv2.putText(annotated_img, custom_text, (10, 30),
+                          cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 0, 255), 2)
 
             # Convert the image to bytes
             _, buffer = cv2.imencode(".jpg", annotated_img)
             img_str = base64.b64encode(buffer).decode()
 
-            return {"image": img_str, "detection": detection_result}
+            return {"image": img_str, "detection": api_result}
 
     except Exception as e:
         logger.error(f"Error during license plate detection: {str(e)}")
@@ -414,6 +338,168 @@ async def process_image(
     result = await process_and_return_image(car_image, custom_text, return_type="json")
     return result
 
+@router.post("/detect-and-process")
+async def detect_and_process(
+    request: Request,
+    car_image: UploadFile = File(...),
+    custom_text: Optional[str] = Form(None),
+    text_x: Optional[int] = Form(None),
+    text_y: Optional[int] = Form(None),
+    conf_threshold: float = Form(0.1),  # Lowered threshold for better detection
+    return_type: str = Form("image"),  # Default to "image" for direct image viewing
+    skip_enhancement: bool = Form(False)  # Changed default to enable enhancement
+):
+    """
+    Detect license plate and return processed annotated image.
+
+    Parameters:
+    - car_image: Image file
+    - custom_text: Optional text to add to the processed image
+    - text_x: X coordinate for custom text
+    - text_y: Y coordinate for custom text
+    - conf_threshold: Confidence threshold (0.0-1.0)
+    - return_type: Return format ("json", "image", or "base64")
+    - skip_enhancement: Skip image enhancement if True
+
+    Returns:
+    - When return_type is "image": Direct image response (StreamingResponse)
+    - When return_type is "json" or "base64": JSON with detection results and optionally base64 image
+    """
+    try:
+        # Start timing
+        start_time = datetime.now()
+
+        # Read image file
+        contents = await car_image.read()
+        nparr = np.frombuffer(contents, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        if image is None:
+            raise HTTPException(status_code=400, detail="Invalid image format")
+
+        # Get image dimensions
+        height, width = image.shape[:2]
+        logger.info(f"Image dimensions: {width}x{height}")
+
+        # Perform detection using the common detection function
+        detection_result = detect_license_plate(
+            image=image,
+            conf_threshold=conf_threshold,
+            skip_enhancement=skip_enhancement
+        )
+
+        # Create an annotated image
+        annotated_img = image.copy()
+
+        # Draw license plate detection if found
+        if detection_result["success"] and detection_result["detections"]:
+            # Find the best detection (already determined in detect_license_plate)
+            best_detection = None
+            for detection in detection_result["detections"]:
+                if best_detection is None or detection["confidence"] > best_detection["confidence"]:
+                    best_detection = detection
+
+            if best_detection:
+                # Get the coordinates
+                x1, y1, x2, y2 = best_detection["box"]
+
+                # Ensure coordinates are valid
+                x1 = max(0, min(x1, width - 1))
+                y1 = max(0, min(y1, height - 1))
+                x2 = max(0, min(x2, width - 1))
+                y2 = max(0, min(y2, height - 1))
+
+                # If no custom text is provided, use a default value
+                display_text = custom_text if custom_text else "License Plate"
+
+                # Calculate text dimensions with larger, bolder font
+                font = cv2.FONT_HERSHEY_SIMPLEX
+                font_scale = 0.8  # Increased from 0.6
+                font_thickness = 3  # Increased from 2
+                text_size, baseline = cv2.getTextSize(display_text, font, font_scale, font_thickness)
+
+                # Create a white filled rectangle directly over the license plate
+                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 255, 255), -1)  # White filled rectangle
+
+                # Calculate text position to center it within the rectangle
+                text_x = x1 + (x2 - x1 - text_size[0]) // 2  # Center horizontally
+                text_y = y1 + (y2 - y1 + text_size[1]) // 2  # Center vertically
+
+                # Add the text in black color with improved visibility
+                cv2.putText(annotated_img, display_text, (text_x, text_y),
+                            font, font_scale, (0, 0, 0), font_thickness)
+
+        # Generate a unique image ID
+        image_id = str(uuid.uuid4())
+        timestamp = int(time.time())
+
+        # Save processed image to disk
+        output_dir = os.path.join(settings.MEDIA_ROOT, "processed")
+        os.makedirs(output_dir, exist_ok=True)
+
+        output_file = os.path.join(output_dir, f"{image_id}.jpg")
+        cv2.imwrite(output_file, annotated_img)
+
+        # Generate URL for the processed image
+        host = request.headers.get("host", f"{settings.API_HOST}:{settings.API_PORT}")
+        image_url = f"http://{host}/media/processed/{image_id}.jpg"
+
+        # Check if return_type is "image" - return a StreamingResponse with the image
+        if return_type.lower() == "image":
+            # Encode the image for streaming
+            _, buffer = cv2.imencode(".jpg", annotated_img)
+            io_buf = io.BytesIO(buffer.tobytes())
+            io_buf.seek(0)
+
+            # Return the image directly
+            logger.info("Returning image as StreamingResponse")
+            return StreamingResponse(io_buf, media_type="image/jpeg")
+
+        # Otherwise, prepare JSON response (for "json" or "base64" return types)
+        # Check if base64 encoding is requested
+        include_base64 = return_type.lower() in ["base64", "both"]
+        base64_data = None
+
+        if include_base64:
+            # Convert the processed image to base64
+            _, buffer = cv2.imencode(".jpg", annotated_img)
+            base64_data = f"data:image/jpeg;base64,{base64.b64encode(buffer).decode('utf-8')}"
+
+        # Build the JSON response
+        response = {
+            "image_id": image_id,
+            "status": "success",
+            "custom_text": custom_text,
+            "custom_text_position": {"x": text_x, "y": text_y} if text_x and text_y else None,
+            "message": "Image processed successfully",
+            "image_url": image_url,
+            "timestamp": timestamp,
+            "detection": {
+                "detection_found": detection_result["success"],
+                "plate_text": None,  # No OCR implemented yet
+                "confidence": detection_result["confidence"] if detection_result["success"] else None,
+                "bounding_box": best_detection if detection_result["success"] and best_detection else None,
+                "detections": detection_result["detections"],
+                "detection_time": detection_result["detection_time"]
+            }
+        }
+
+        # Include image data if requested
+        if include_base64:
+            response["image_data"] = {
+                "content_type": "image/jpeg",
+                "base64_data": base64_data
+            }
+
+        # Return the JSON response
+        logger.info("Returning JSON response")
+        return response
+
+    except Exception as e:
+        logger.error(f"Error in detect_and_process: {str(e)}")
+        logger.error(traceback.format_exc())
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.get("/image/{image_id}")
 async def get_image(image_id: str):
     """Retrieve a processed image by ID"""
@@ -521,69 +607,187 @@ def detect_vehicles(image: np.ndarray) -> List[Dict]:
 
 def focus_license_plate_regions(image: np.ndarray) -> List[np.ndarray]:
     """
-    Extract regions of interest where license plates are likely to be found
+    Extract regions of interest where license plates are likely to be found.
+    Now returning only the whole image for better resolution and to avoid boundary issues.
 
     Args:
         image: Original BGR image
 
     Returns:
-        List of image regions (RGB) to focus license plate detection on
+        List containing only the whole image in RGB format
     """
     try:
         # Convert to RGB for detection
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        # Get vehicle boxes
-        vehicle_boxes = detect_vehicles(rgb_image)
-
-        if not vehicle_boxes:
-            # If no vehicles detected, return whole image
-            logger.info("No vehicles detected, using whole image for license plate detection")
-            return [rgb_image]
-
-        # Extract regions with focus on likely license plate locations
-        regions = []
-
-        for box in vehicle_boxes:
-            x1, y1, x2, y2 = box["x1"], box["y1"], box["x2"], box["y2"]
-            vehicle_img = rgb_image[y1:y2, x1:x2].copy()
-
-            # Vehicle detected, focus on front/rear regions where plates are typically found
-            height, width = y2 - y1, x2 - x1
-
-            # Add full vehicle region
-            regions.append(vehicle_img)
-
-            # Add lower third of vehicle (common location for license plates)
-            lower_region_y = y1 + int(height * 0.6)
-            if lower_region_y < y2:
-                lower_region = rgb_image[lower_region_y:y2, x1:x2].copy()
-                if lower_region.size > 0:
-                    regions.append(lower_region)
-
-            # Add front region (first 40% of vehicle width)
-            front_region_x = x1 + int(width * 0.4)
-            if front_region_x > x1:
-                front_region = rgb_image[y1:y2, x1:front_region_x].copy()
-                if front_region.size > 0:
-                    regions.append(front_region)
-
-            # Add rear region (last 40% of vehicle width)
-            rear_region_x = x2 - int(width * 0.4)
-            if rear_region_x < x2:
-                rear_region = rgb_image[y1:y2, rear_region_x:x2].copy()
-                if rear_region.size > 0:
-                    regions.append(rear_region)
-
-            logger.info(f"Extracted {len(regions)} regions from vehicle at {box}")
-
-        # If no valid regions extracted, return original image
-        if not regions:
-            return [rgb_image]
+        # Return only the whole image
+        logger.info("Processing the whole image at higher resolution for license plate detection")
+        regions = [rgb_image]
 
         return regions
 
     except Exception as e:
-        logger.error(f"Error focusing on license plate regions: {str(e)}")
+        logger.error(f"Error creating license plate regions: {str(e)}")
         # Return original image if anything fails
         return [cv2.cvtColor(image, cv2.COLOR_BGR2RGB)]
+
+def detect_license_plate(image, conf_threshold=0.1, skip_enhancement=False):
+    """
+    Process regions of interest for license plate detection.
+
+    Args:
+        image: Image as numpy array (BGR)
+        conf_threshold: Confidence threshold for detections (default: 0.1)
+        skip_enhancement: Whether to skip image enhancement (default: False)
+
+    Returns:
+        Dictionary with detection results
+    """
+    try:
+        # Initialize response
+        response = {
+            "success": False,
+            "license_plate": None,
+            "confidence": 0,
+            "detections": [],
+            "detection_time": 0,
+            "error": None
+        }
+
+        if image is None or image.size == 0 or len(image.shape) < 2:
+            response["error"] = "Invalid image provided to detector"
+            logger.error(response["error"])
+            return response
+
+        # Get the YOLO model
+        model = get_model()
+        if model is None:
+            response["error"] = "Failed to load detection model"
+            logger.error(response["error"])
+            return response
+
+        # Get focus regions (potential license plate areas)
+        regions = focus_license_plate_regions(image)
+
+        if not regions:
+            logger.warning("No regions found for license plate detection")
+            regions = [image]  # Fallback to full image
+
+        start_time = time.time()
+        highest_conf = 0
+        best_detection = None
+
+        # Process each region
+        for idx, region in enumerate(regions):
+            try:
+                # Process image with or without enhancement based on flag
+                processed_img, transform_params = preprocess_image(region, skip_enhancement=skip_enhancement)
+
+                if processed_img is None:
+                    logger.warning(f"Region {idx} preprocessing failed")
+                    continue
+
+                # Perform detection on this region
+                results = model.predict(
+                    source=processed_img,
+                    conf=conf_threshold,  # Use lower confidence threshold
+                    verbose=False
+                )
+
+                # Process results for this region
+                for result in results:
+                    boxes = result.boxes.xyxy.cpu().numpy()
+                    confs = result.boxes.conf.cpu().numpy()
+
+                    for i, (box, conf) in enumerate(zip(boxes, confs)):
+                        x1, y1, x2, y2 = box.astype(int)
+
+                        # Map coordinates back to original image space using transform_params
+                        orig_coords = map_coordinates_to_original([x1, y1, x2, y2], transform_params)
+                        ox1, oy1, ox2, oy2 = orig_coords
+
+                        # Calculate aspect ratio
+                        width = ox2 - ox1
+                        height = oy2 - oy1
+                        aspect_ratio = width / height if height > 0 else 0
+
+                        # Calculate area percentage
+                        region_height, region_width = region.shape[:2]
+                        region_area = region_height * region_width
+                        box_area = width * height
+                        area_percentage = (box_area / region_area) * 100
+
+                        # Filter based on combined criteria
+                        valid_aspect_ratio = 1.0 <= aspect_ratio <= 8.0
+                        valid_area = 0.1 <= area_percentage <= 60.0
+
+                        if valid_aspect_ratio and valid_area:
+                            # Add to detections list with mapped coordinates
+                            detection = {
+                                "box": [int(coord) for coord in [ox1, oy1, ox2, oy2]],
+                                "confidence": float(conf),
+                                "region_index": idx,
+                                "aspect_ratio": float(aspect_ratio),
+                                "area_percentage": float(area_percentage)
+                            }
+                            response["detections"].append(detection)
+
+                            # Update best detection if this one has higher confidence
+                            if conf > highest_conf:
+                                highest_conf = conf
+                                best_detection = detection
+                        else:
+                            if not valid_aspect_ratio:
+                                logger.debug(f"Filtered out detection with aspect ratio: {aspect_ratio:.2f}")
+                            if not valid_area:
+                                logger.debug(f"Filtered out detection with area percentage: {area_percentage:.2f}%")
+
+            except Exception as e:
+                logger.error(f"Error processing region {idx}: {str(e)}")
+                logger.error(traceback.format_exc())
+                continue
+
+        # Calculate detection time
+        detection_time = time.time() - start_time
+        response["detection_time"] = detection_time
+
+        # Set highest confidence detection as the result
+        if best_detection:
+            response["success"] = True
+            response["confidence"] = best_detection["confidence"]
+
+            # Extract region from the original image
+            region_idx = best_detection["region_index"]
+            region_img = regions[region_idx]
+
+            # Extract license plate from region using detected box
+            box = best_detection["box"]
+            x1, y1, x2, y2 = box
+
+            # Ensure coordinates are within bounds
+            h, w = region_img.shape[:2]
+            x1 = max(0, min(x1, w-1))
+            y1 = max(0, min(y1, h-1))
+            x2 = max(0, min(x2, w-1))
+            y2 = max(0, min(y2, h-1))
+
+            # Extract license plate image
+            if x1 < x2 and y1 < y2:  # Valid box
+                license_plate_img = region_img[y1:y2, x1:x2]
+
+                # Convert to RGB and encode as base64
+                license_plate_rgb = cv2.cvtColor(license_plate_img, cv2.COLOR_BGR2RGB)
+                _, buffer = cv2.imencode('.jpg', license_plate_rgb)
+                license_plate_b64 = base64.b64encode(buffer).decode('utf-8')
+
+                response["license_plate"] = license_plate_b64
+
+        logger.info(f"License plate detection completed in {detection_time:.2f}s with {len(response['detections'])} detections")
+        return response
+
+    except Exception as e:
+        error_msg = f"Error in license plate detection: {str(e)}"
+        logger.error(error_msg)
+        logger.error(traceback.format_exc())
+        response["error"] = error_msg
+        return response

@@ -10,6 +10,8 @@ class Settings(BaseSettings):
     HOST: str = os.getenv("HOST", "0.0.0.0")
     PORT: int = int(os.getenv("PORT", 8000))
     DEBUG: bool = os.getenv("DEBUG", "True").lower() == "true"
+    API_HOST: str = os.getenv("API_HOST", "localhost")
+    API_PORT: int = int(os.getenv("API_PORT", 8000))
 
     # Database Configuration
     DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///./app.db")
@@ -26,6 +28,9 @@ class Settings(BaseSettings):
     CONFIDENCE_THRESHOLD: float = float(os.getenv("CONFIDENCE_THRESHOLD", 0.25))
     MAX_DETECTIONS: int = int(os.getenv("MAX_DETECTIONS", 10))
     OUTPUT_DIR: str = os.getenv("OUTPUT_DIR", "app/static/output")
+
+    # Media Configuration
+    MEDIA_ROOT: str = os.getenv("MEDIA_ROOT", "app/static/media")
 
     # Upload Limits
     MAX_FILE_SIZE: int = int(os.getenv("MAX_FILE_SIZE", 100 * 1024 * 1024))  # 100MB by default
