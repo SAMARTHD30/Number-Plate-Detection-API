@@ -1,3 +1,0 @@
-@echo off
-echo Running enhancement test on multiple images...
-python enhance_test.py Dataset/1.jpeg Dataset/2.jpeg Dataset/3.jpeg Dataset/4.jpeg Dataset/5.jpeg Dataset/6.jpeg Dataset/7.jpeg Dataset/8.jpeg Dataset/9.jpeg Dataset/10.jpeg
