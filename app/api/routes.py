@@ -418,16 +418,16 @@ async def detect_and_process(
                 font_thickness = 3  # Increased from 2
                 text_size, baseline = cv2.getTextSize(display_text, font, font_scale, font_thickness)
 
-                # Create a white filled rectangle directly over the license plate
-                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 255, 255), -1)  # White filled rectangle
+                 # Create a white filled rectangle directly over the license plate
+                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 155, 17), -1)  # White filled rectangle
 
                 # Calculate text position to center it within the rectangle
                 text_x = x1 + (x2 - x1 - text_size[0]) // 2  # Center horizontally
                 text_y = y1 + (y2 - y1 + text_size[1]) // 2  # Center vertically
 
-                # Add the text in black color with improved visibility
+                # Add the text in blue color with improved visibility
                 cv2.putText(annotated_img, display_text, (text_x, text_y),
-                            font, font_scale, (255, 155, 17), font_thickness)
+                            font, font_scale, (255, 255, 255), font_thickness)
 
         # Generate a unique image ID
         image_id = str(uuid.uuid4())
