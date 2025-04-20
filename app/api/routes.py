@@ -427,7 +427,7 @@ async def detect_and_process(
 
                 # Add the text in black color with improved visibility
                 cv2.putText(annotated_img, display_text, (text_x, text_y),
-                            font, font_scale, (0, 0, 0), font_thickness)
+                            font, font_scale, (255, 155, 17), font_thickness)
 
         # Generate a unique image ID
         image_id = str(uuid.uuid4())
