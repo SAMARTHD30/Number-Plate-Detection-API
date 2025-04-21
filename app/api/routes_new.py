@@ -158,53 +158,22 @@ async def process_image(
                 # If no custom text is provided, use a default value
                 display_text = custom_text if custom_text else "License Plate"
 
-                # Use a lighter, more readable font
-                font = cv2.FONT_HERSHEY_COMPLEX
+                # Calculate text dimensions with larger, bolder font
+                font = cv2.FONT_HERSHEY_SIMPLEX
                 font_scale = 0.8
-                font_thickness = 1
+                font_thickness = 3
                 text_size, baseline = cv2.getTextSize(display_text, font, font_scale, font_thickness)
 
-                # Define padding for text (pixels on each side)
-                padding = 20
+                # Create a white filled rectangle directly over the license plate
+                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 255, 255), -1)  # White filled rectangle
 
-                # Calculate total text dimensions with padding
-                text_width = text_size[0] + 2 * padding
-                text_height = text_size[1] + 2 * padding
-
-                # Get plate dimensions
-                plate_width = x2 - x1
-                plate_height = y2 - y1
-
-                # Adjust font scale if text with padding is too wide for the plate
-                if text_width > plate_width:
-                    scale_factor = plate_width / text_width * 0.85  # 85% of available width
-                    font_scale *= scale_factor
-                    # Recalculate text size with new font scale
-                    text_size, _ = cv2.getTextSize(display_text, font, font_scale, font_thickness)
-
-                # Create a blue filled rectangle over the license plate
-                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 155, 17), 2)
-                cv2.rectangle(annotated_img, (x1, y1), (x2, y2), (255, 155, 17), cv2.FILLED)
-
-                # Calculate text position to center it within the rectangle with adjusted font size
+                # Calculate text position to center it within the rectangle
                 text_x = x1 + (x2 - x1 - text_size[0]) // 2  # Center horizontally
-                # Adjust vertical position for better optical centering
-                text_y = y1 + (y2 - y1 + text_size[1]) // 2 + 2  # +2 for better vertical centering
+                text_y = y1 + (y2 - y1 + text_size[1]) // 2  # Center vertically
 
-                # Create a subtle text outline/shadow effect for better readability
-                # Use a dark gray color for a more subtle outline
-                outline_color = (70, 70, 70)  # Dark gray in BGR
-                outline_thickness = 1  # Thinner outline
-
-                # Use only 4 main directions instead of 8 for a more subtle outline
-                for offset_x, offset_y in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                    cv2.putText(annotated_img, display_text,
-                                (text_x + offset_x, text_y + offset_y),
-                                font, font_scale, outline_color, outline_thickness, cv2.LINE_AA)
-
-                # Finally, draw the main white text on top with anti-aliasing
+                # Add the text in black color with improved visibility
                 cv2.putText(annotated_img, display_text, (text_x, text_y),
-                            font, font_scale, (255, 255, 255), font_thickness, cv2.LINE_AA)
+                            font, font_scale, (0, 0, 0), font_thickness)
 
         # Generate a unique image ID
         image_id = str(uuid.uuid4())

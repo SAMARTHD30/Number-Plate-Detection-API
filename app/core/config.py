@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     MEDIA_ROOT: str = os.getenv("MEDIA_ROOT", "app/static/media")
 
     # Upload Limits
-    MAX_FILE_SIZE: int = int(os.getenv("MAX_FILE_SIZE", 100 * 1024 * 1024))  # 100MB by default
+    MAX_FILE_SIZE: int = int(os.getenv("MAX_FILE_SIZE", 30 * 1024 * 1024))  # 30MB by default
 
     # Security
     SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here")

@@ -2,6 +2,8 @@
 
 A FastAPI-based API for detecting and processing license plates in images.
 
+![Version](https://img.shields.io/badge/version-v1.1.0--dev-blue)
+
 ## Features
 
 - License plate detection using YOLOv5 (CPU-only)
@@ -320,3 +322,24 @@ tail -f /var/log/license-plate-api.err.log
 
 ## License
 MIT License - See LICENSE file for details
+
+## Versioning
+
+This project uses semantic versioning. You can find the current version in `app/version.py`.
+
+- **v1.0.0**: Initial stable release with license plate detection
+- **v1.1.0-dev**: Development version with improved text rendering and professional appearance
+
+See the [CHANGELOG.md](CHANGELOG.md) file for a detailed list of changes between versions.
+
+To access specific versions:
+```bash
+# Check out version 1.0 tag
+git checkout v1.0
+
+# Return to development branch
+git checkout v1.1-dev
+
+# Return to master branch
+git checkout master
+```
