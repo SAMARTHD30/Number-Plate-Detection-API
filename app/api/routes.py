@@ -78,7 +78,7 @@ async def ping():
     return {
         "status": "ok",
         "message": "API is running",
-        "version": "1.0.0"
+        "version": "1.1.0-dev"
     }
 
 @router.post("/process")
@@ -158,14 +158,14 @@ async def process_image(
                 # If no custom text is provided, use a default value
                 display_text = custom_text if custom_text else "License Plate"
 
-                # Use a lighter, more readable font
+                # Use a larger, more readable font
                 font = cv2.FONT_HERSHEY_COMPLEX
-                font_scale = 0.8
-                font_thickness = 1
+                font_scale = 1.2  # Increased from 0.8 for better visibility
+                font_thickness = 2  # Increased from 1 for better visibility
                 text_size, baseline = cv2.getTextSize(display_text, font, font_scale, font_thickness)
 
                 # Define padding for text (pixels on each side)
-                padding = 20
+                padding = 15  # Reduced from 20 as requested
 
                 # Calculate total text dimensions with padding
                 text_width = text_size[0] + 2 * padding
@@ -194,7 +194,7 @@ async def process_image(
                 # Create a subtle text outline/shadow effect for better readability
                 # Use a dark gray color for a more subtle outline
                 outline_color = (70, 70, 70)  # Dark gray in BGR
-                outline_thickness = 1  # Thinner outline
+                outline_thickness = 2  # Increased from 1 to match new font thickness
 
                 # Use only 4 main directions instead of 8 for a more subtle outline
                 for offset_x, offset_y in [(0, 1), (0, -1), (1, 0), (-1, 0)]:

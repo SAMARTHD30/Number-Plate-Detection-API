@@ -80,7 +80,7 @@ async def startup():
 #     await FastAPILimiter.init(redis_client)
 
 # Include API routes
-app.include_router(api_router, prefix="/api")
+app.include_router(api_router, prefix="/api/v1")
 
 # Root route
 @app.get("/", tags=["Status"])
